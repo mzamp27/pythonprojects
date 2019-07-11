@@ -7,20 +7,57 @@ Main loop starts the program
 from inputsanitizer import *
 from Horse import *
 
+
+
 def GetNumHorses():
     numHorses = Sanitized_Number_Min_Max_Range("How many horses are running this year? ", int, 10, 30)
     return numHorses
 
-def CheckNumHorses():
-    n = GetNumHorses()
+def CheckNumHorses(numHorses):
+    n = numHorses
     prompt = ("You have entered {numHorses} for the number of horses racing this year.\nIf this is correct enter 'y' for YES, if not enter 'n' for NO: ".format(numHorses=n))    
     return ValidateNumber(prompt, n)
 
+def VerifiedNumHorses():    
+    while True: 
+        numHorses = GetNumHorses()
+        if (CheckNumHorses(numHorses) == True):
+            print ("You successfully asked for a number and confirmed it")
+            return numHorses
+        else:
+            continue
 
-finalnum = CheckNumHorses()
 
 
-if finalnum == True:
-    print ("You successfully asked for a number and confirmed it")
-else:
-    print
+
+def PopHorseDict(n):
+    horseDict = {4 : ["Name", "Rating"]}
+    numHorses = n
+    #add horse to list if 
+    for i in range (numHorses):
+        uniqueNum = Sanitized_Number_Min_Max_Range("Please enter the horse's position number? ", int, 1, 30)
+        while True:
+            if uniqueNum in horseDict.keys():
+                print ("That horse number already exists")
+                uniqueNum = Sanitized_Number_Min_Max_Range("Please enter the horse's position number? ", int, 1, 30)
+                continue    
+            else:
+                break
+        horseName = input("Please enter the horse's name")
+        horseRating = Sanitized_Number_Min_Max_Range("Please enter the horse's rating betwee 1 and 10? ", int, 1, 10)
+        
+        #At this point we create an instance of the horse class and add it to the dictionary?
+        #H1 = Horse(horseName, uniqueNum, horseRating)
+        #D1 = {H1.GetNumber: [H1.GetName, H1.GetRating]}
+        D1 = {uniqueNum: [horseName, horseRating]}
+        horseDict.update(D1)
+        
+
+def Main():
+    numHorses = VerifiedNumHorses()
+    PopHorseDict(numHorses)
+
+
+Main()
+
+
