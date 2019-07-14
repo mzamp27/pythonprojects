@@ -6,11 +6,12 @@ Main loop starts the program
 """
 from inputsanitizer import *
 from Horse import *
+import pprint
 
 
-
+#The next 3 methods are for getting the number of horses racing
 def GetNumHorses():
-    numHorses = Sanitized_Number_Min_Max_Range("How many horses are running this year? ", int, 10, 30)
+    numHorses = Sanitized_Number_Min_Max_Range("How many horses are running this year? ", int, 3, 30)
     return numHorses
 
 def CheckNumHorses(numHorses):
@@ -28,10 +29,9 @@ def VerifiedNumHorses():
             continue
 
 
-
-
+#once number of horses is determined allow user to enter the data of each horse
 def PopHorseDict(n):
-    horseDict = {4 : ["Name", "Rating"]}
+    horseDict = {}
     numHorses = n
     #add horse to list if 
     for i in range (numHorses):
@@ -51,12 +51,23 @@ def PopHorseDict(n):
         #D1 = {H1.GetNumber: [H1.GetName, H1.GetRating]}
         D1 = {uniqueNum: [horseName, horseRating]}
         horseDict.update(D1)
+    return horseDict
+
+#after dict is populated give user a chance to review it and make changes keeping original
+#dict stored in a variable in main loop
+def ReviewDict(racerDict_in):
+    tempDict = racerDict_in
+    print ("Here is your lineup!")
+    print (Color.UNDERLINE + "#" + Color.END + " - " + Color.UNDERLINE + "[Name, Rating]" + Color.END)
+    for k, v in tempDict.items():
+        print (k, " - " , v)
+
         
 
 def Main():
     numHorses = VerifiedNumHorses()
-    PopHorseDict(numHorses)
-
+    racerDict = PopHorseDict(numHorses)
+    reviewed = ReviewDict(racerDict)
 
 Main()
 
