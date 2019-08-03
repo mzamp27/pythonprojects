@@ -7,7 +7,8 @@ Main loop starts the program
 from inputsanitizer import *
 from Horse import *
 import pprint
-
+from pickermethods import *
+from pickerinterface import *
 
 #The next 3 methods are for getting the number of horses racing
 def GetNumHorses():
@@ -62,12 +63,44 @@ def ReviewDict(racerDict_in):
     for k, v in tempDict.items():
         print (k, " - " , v)
 
-        
+    #not yet implemented make changes to dict then return it
+    return tempDict
+
+
+def WeightedList(racerDict_in):
+    racers = racerDict_in
+    weightlist = []
+    
+    for key in racers:
+        weight = racers[key][1]
+        for i in range(weight):
+            weightlist.append(key)
+    return weightlist
+
+def DisplayPickerInterface():
+    print ("Lets Pick Some Winners!")
+    PI = PickingInterface()
+    while True:
+        print ("Please choose from the following menu:")
+        print ("""(1. Save), (2. pick 2), (3. pick 3), 
+        (4. pick 4.), (5. Change horse rating), (6. Scratch Horse), 
+        (7. Print Lineup), (8. OPTIONAL ADD ON), (9. OPTIONAL ADD ON)""")
+        userChoice = Sanitized_Number_Min_Max_Range(": ", int, 1, 10)
+        if userChoice == 9:
+            break
+        PI.numbersToMethods(userChoice)
 
 def Main():
-    numHorses = VerifiedNumHorses()
-    racerDict = PopHorseDict(numHorses)
-    reviewed = ReviewDict(racerDict)
+    #numHorses = VerifiedNumHorses()
+    #racerDictUNV = PopHorseDict(numHorses)
+    #reviewedVER = ReviewDict(racerDictUNV)
+    #weightlist = WeightedList(reviewedVER)
+    DisplayPickerInterface()
+    #exactapick = Exacta(weightlist)
+    #print (exactapick)
+    
+
+testDict = {1: ["Jim", 5], 2: ["Tim", 4], 3: ["Mike", 8]}
 
 Main()
 
